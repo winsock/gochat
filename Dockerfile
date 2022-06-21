@@ -3,22 +3,21 @@
 ##
 ## Build
 ##
-FROM golang:1.18-alpine AS build
+FROM golang:1.18-bullseye AS build
 
 WORKDIR /app
-ADD ./* ./
+ADD . ./
 RUN go mod download
-RUN go build -o /server
+RUN go build -ldflags="-extldflags=-static" -o /server
 
 ##
 ## Deploy
 ##
 
-FROM alpine:3.16
+FROM debian:bullseye-slim
 
 WORKDIR /
 COPY --from=build /server /server
 EXPOSE 8080
-USER app:app
 
 ENTRYPOINT ["/server"]
