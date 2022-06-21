@@ -42,5 +42,5 @@ func (api *WebAPI) parseTime(formValue string, defaultValue time.Time) (time.Tim
 	if len(formValue) == 0 {
 		return defaultValue, nil
 	}
-	return time.Parse(time.RFC3339, formValue)
+	return time.Parse(time.RFC3339Nano, formValue)
 }

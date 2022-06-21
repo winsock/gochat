@@ -21,7 +21,7 @@ func (db *Database) FindUser(username string) (*User, error) {
 
 func (db *Database) InsertMessage(message Message) (Message, error) {
 	_, err := db.database.Exec("INSERT INTO messages(uuid, content, sender, recipient, created_at) VALUES (?, ?, ?, ?, ?)",
-		message.UUID, message.Content, message.Sender.UUID, message.Recipient.UUID, message.CreatedAt.Format(time.RFC3339))
+		message.UUID, message.Content, message.Sender.UUID, message.Recipient.UUID, message.CreatedAt.Format(time.RFC3339Nano))
 	return message, err
 }
 
@@ -30,7 +30,7 @@ func (db *Database) FindMessagesForUser(user User, from time.Time, offset uint64
 	SELECT messages.uuid, messages.content, messages.created_at, senderUser.uuid, senderUser.username, recipientUser.uuid, recipientUser.username FROM messages
 	LEFT JOIN users senderUser ON senderUser.uuid = messages.sender LEFT JOIN users recipientUser ON recipientUser.uuid = messages.recipient
 	WHERE recipient = ? AND created_at >= ? ORDER BY messages.created_at LIMIT ? OFFSET ?
-	`, user.UUID, from.Format(time.RFC3339), limit, offset)
+	`, user.UUID, from.Format(time.RFC3339Nano), limit, offset)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (db *Database) FindMessagesForUserFromSender(user User, sender User, from t
 	SELECT messages.uuid, messages.content, messages.created_at, senderUser.uuid, senderUser.username, recipientUser.uuid, recipientUser.username FROM messages
 	LEFT JOIN users senderUser ON senderUser.uuid = messages.sender LEFT JOIN users recipientUser ON recipientUser.uuid = messages.recipient
 	WHERE recipient = ? and sender = ? AND created_at >= ? ORDER BY messages.created_at LIMIT ? OFFSET ?
-	`, user.UUID, sender.UUID, from.Format(time.RFC3339), limit, offset)
+	`, user.UUID, sender.UUID, from.Format(time.RFC3339Nano), limit, offset)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +60,7 @@ func parseMessages(rows *sql.Rows) ([]Message, error) {
 		if err != nil {
 			return messages, err
 		}
-		message.CreatedAt, err = time.Parse(time.RFC3339, createdAtString)
+		message.CreatedAt, err = time.Parse(time.RFC3339Nano, createdAtString)
 		if err != nil {
 			return messages, err
 		}

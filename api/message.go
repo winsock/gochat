@@ -79,7 +79,7 @@ func (api *WebAPI) SearchMessages(w http.ResponseWriter, r *http.Request) {
 
 	fromTime, err := api.parseTime(r.FormValue("from"), time.Now().AddDate(0, 0, -30))
 	if err != nil {
-		_ = api.writeJsonError(w, "Invalid from time provided, must be in the following format "+time.RFC3339, http.StatusBadRequest, err)
+		_ = api.writeJsonError(w, "Invalid from time provided, must be in the following format "+time.RFC3339Nano, http.StatusBadRequest, err)
 		return
 	}
 	offset, err := api.parseUint(r.FormValue("offset"), 0)
