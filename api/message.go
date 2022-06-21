@@ -92,6 +92,10 @@ func (api *WebAPI) SearchMessages(w http.ResponseWriter, r *http.Request) {
 		_ = api.writeJsonError(w, "Invalid limit provided, must be a positive number", http.StatusBadRequest, err)
 		return
 	}
+	if limit > 1000 {
+		_ = api.writeJsonError(w, "Invalid limit provided, must be less than or equal to 1000", http.StatusBadRequest, nil)
+		return
+	}
 
 	var messages []database.Message
 	if sender != nil && recipient != nil {
