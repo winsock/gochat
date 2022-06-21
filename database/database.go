@@ -20,7 +20,7 @@ type Database struct {
 
 func Open() (*Database, error) {
 	// Create an in-memory DB, by switching the driver and DSN this can be changed to Postgres or another RDBMS
-	db, err := sql.Open("sqlite3", "file:test.db?cache=shared&mode=memory")
+	db, err := sql.Open("sqlite3", "file:test.db")
 	if err != nil {
 		return nil, err
 	}

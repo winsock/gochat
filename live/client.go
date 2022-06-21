@@ -50,6 +50,8 @@ func (client *Client) serve() {
 	for err == nil {
 		var message database.Message
 		err = wsjson.Read(client.ctx, client.conn, &message)
+
+		// TODO Send the received message from the client
 	}
 	log.Printf("Closing connection to client %+v\n", client.user)
 	if errors.Is(err, context.Canceled) {

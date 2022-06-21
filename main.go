@@ -14,12 +14,12 @@ func main() {
 		log.Printf("Error opening database! %s\n", err.Error())
 	}
 	liveServer := live.Create(db)
-	restAPI := api.Create(db)
+	restAPI := api.Create(db, liveServer)
 
 	httpMux := http.NewServeMux()
 	httpMux.HandleFunc("/live", liveServer.ServeWebsocket)
 	httpMux.HandleFunc("/user/create", restAPI.CreateUser)
-	//httpMux.HandleFunc("/message/send", restAPI.SendMessage)
+	httpMux.HandleFunc("/message/send", restAPI.SendMessage)
 	//httpMux.HandleFunc("/message/search", restAPI.SearchMessages)
 
 	err = http.ListenAndServe(":8080", httpMux)

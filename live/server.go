@@ -2,12 +2,15 @@ package live
 
 import (
 	"context"
+	"errors"
 	"github.com/google/uuid"
 	"github.com/winsock/gochat/database"
 	"log"
 	"net/http"
 	"sync"
 )
+
+type ClientFunc func(client *Client) error
 
 type Server struct {
 	db          *database.Database
@@ -21,6 +24,19 @@ func Create(db *database.Database) *Server {
 		db:      db,
 		ctx:     context.Background(),
 		clients: make(map[uuid.UUID]*Client),
+	}
+}
+
+var NoSuchClientErr = errors.New("no such client is connected")
+
+// RunWithClient - Runs a function with a connected client protected by the client mutex
+func (server *Server) RunWithClient(userUUID uuid.UUID, clientFunc ClientFunc) error {
+	server.clientMutex.RLock()
+	defer server.clientMutex.RUnlock()
+	if client, ok := server.clients[userUUID]; ok {
+		return clientFunc(client)
+	} else {
+		return NoSuchClientErr
 	}
 }
 

@@ -13,6 +13,6 @@ func (db *Database) FindUser(username string) (User, error) {
 
 func (db *Database) InsertMessage(message Message) (Message, error) {
 	_, err := db.database.Exec("INSERT INTO messages(uuid, content, sender, recipient, created_at) VALUES (?, ?, ?, ?, ?)",
-		message.Content, message.Sender.UUID, message.Recipient.UUID, message.CreatedAt)
+		message.UUID, message.Content, message.Sender.UUID, message.Recipient.UUID, message.CreatedAt)
 	return message, err
 }
