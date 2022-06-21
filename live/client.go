@@ -11,14 +11,15 @@ import (
 )
 
 type Client struct {
-	conn       *websocket.Conn
-	ctx        context.Context
-	stop       context.CancelFunc
-	user       database.User
-	remoteAddr string
+	conn         *websocket.Conn
+	ctx          context.Context
+	stop         context.CancelFunc
+	onDisconnect ClientFunc
+	user         database.User
+	remoteAddr   string
 }
 
-func Open(user database.User, serverCtx context.Context, w http.ResponseWriter, r *http.Request) (*Client, error) {
+func Open(user database.User, serverCtx context.Context, w http.ResponseWriter, r *http.Request, onDisconnect ClientFunc) (*Client, error) {
 	c, err := websocket.Accept(w, r, nil)
 	if err != nil {
 		log.Printf("Error upgrading HTTP request to websocket connection, %s\n", err.Error())
@@ -26,11 +27,12 @@ func Open(user database.User, serverCtx context.Context, w http.ResponseWriter, 
 	}
 	clientCtx, cancel := context.WithCancel(serverCtx)
 	client := Client{
-		conn:       c,
-		ctx:        clientCtx,
-		stop:       cancel,
-		user:       user,
-		remoteAddr: r.RemoteAddr,
+		conn:         c,
+		ctx:          clientCtx,
+		stop:         cancel,
+		onDisconnect: onDisconnect,
+		user:         user,
+		remoteAddr:   r.RemoteAddr,
 	}
 	go client.serve()
 	return &client, nil
@@ -63,4 +65,5 @@ func (client *Client) serve() {
 			log.Printf("Error closing connection, %s\n", err.Error())
 		}
 	}
+	_ = client.onDisconnect(client)
 }

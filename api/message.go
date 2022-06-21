@@ -47,7 +47,7 @@ func (api *WebAPI) SendMessage(w http.ResponseWriter, r *http.Request) {
 		return client.SendMessage(newMessage)
 	})
 	// Ignore no such client errors, clients may not be always connected
-	if !errors.Is(err, live.NoSuchClientErr) {
+	if err != nil && !errors.Is(err, live.NoSuchClientErr) {
 		_ = api.writeJsonError(w, "Error while sending message to live client of the sender", http.StatusInternalServerError, err)
 		return
 	}
@@ -58,7 +58,7 @@ func (api *WebAPI) SendMessage(w http.ResponseWriter, r *http.Request) {
 		return client.SendMessage(newMessage)
 	})
 	// Ignore no such client errors, clients may not be always connected
-	if !errors.Is(err, live.NoSuchClientErr) {
+	if err != nil && !errors.Is(err, live.NoSuchClientErr) {
 		_ = api.writeJsonError(w, "Error while sending message to live client of the recipient", http.StatusInternalServerError, err)
 		return
 	}

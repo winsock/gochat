@@ -57,7 +57,7 @@ func (server *Server) ServeWebsocket(w http.ResponseWriter, r *http.Request) {
 	server.clientMutex.RUnlock()
 
 	// Create the client
-	client, err := Open(user, server.ctx, w, r)
+	client, err := Open(user, server.ctx, w, r, server.removeClient)
 	if err != nil {
 		log.Printf("Error creating websocket client! %s\n", err.Error())
 		http.Error(w, "An internal error has occurred", http.StatusInternalServerError)
@@ -66,4 +66,13 @@ func (server *Server) ServeWebsocket(w http.ResponseWriter, r *http.Request) {
 	server.clientMutex.Lock()
 	server.clients[user.UUID] = client
 	server.clientMutex.Unlock()
+
+	log.Printf("Client connected with username %s from %s\n", user.Username, r.RemoteAddr)
+}
+
+func (server *Server) removeClient(client *Client) error {
+	server.clientMutex.Lock()
+	delete(server.clients, client.user.UUID)
+	server.clientMutex.Unlock()
+	return nil
 }
