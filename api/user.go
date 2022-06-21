@@ -16,5 +16,5 @@ func (api *WebAPI) CreateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Printf("New user created %+v\n", newUser)
-	_ = api.writeJsonResponse(w, newUser, http.StatusOK)
+	_ = api.writeJsonResponse(w, newUser, http.StatusCreated)
 }

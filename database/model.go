@@ -6,14 +6,14 @@ import (
 )
 
 type User struct {
-	UUID     uuid.UUID
-	Username string
+	UUID     uuid.UUID `json:"uuid"`
+	Username string    `json:"username"`
 }
 
 type Message struct {
-	UUID      uuid.UUID
-	CreatedAt time.Time
-	Content   string
-	Sender    User
-	Recipient User
+	UUID      uuid.UUID `json:"uuid"`
+	CreatedAt time.Time `json:"createdAt"`
+	Content   string    `json:"content"`
+	Sender    User      `json:"sender"`
+	Recipient User      `json:"recipient"`
 }

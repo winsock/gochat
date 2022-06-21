@@ -70,7 +70,7 @@ func (api *WebAPI) SendMessage(w http.ResponseWriter, r *http.Request) {
 		SentLiveToRecipient: sentLiveToRecipient,
 	}
 	log.Printf("Message sent %+v\n", response)
-	_ = api.writeJsonResponse(w, response, http.StatusOK)
+	_ = api.writeJsonResponse(w, response, http.StatusCreated)
 }
 
 func (api *WebAPI) SearchMessages(w http.ResponseWriter, r *http.Request) {
