@@ -6,14 +6,14 @@ import (
 )
 
 type User struct {
-	ID       uuid.UUID
+	UUID     uuid.UUID
 	Username string
 }
 
 type Message struct {
-	ID        uuid.UUID
+	UUID      uuid.UUID
 	CreatedAt time.Time
-	Contents  string
-	Sender    uuid.UUID
-	Recipient uuid.UUID
+	Content   string
+	Sender    User
+	Recipient User
 }

@@ -9,3 +9,4 @@ The project will leverage GoLang and SQLite to power the server. The client will
 ### Future Improvements
 - Switch the database to Postgres or another RDBMS to allow scaling the service with a single database
   - Only a few lines would need to be changed, but left out of this project for simplicity in running.
+- Allow multiple connections from the same user to the live websocket interface. For simplicity, I am only allowing a single client per user.
