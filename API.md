@@ -152,3 +152,27 @@ curl -X POST -F 'recipient=recipient' http://localhost:8080/message/search
 ```shell
 curl -X POST -F 'recipient=recipient' -F 'sender=sender1' http://localhost:8080/message/search
 ```
+
+## Realtime API
+This is a websocket endpoint that allows bidirectional realtime communication with the chat server.
+### Endpoint
+```
+/live
+```
+### Message Format
+The on-wire format of the messages being passed between the server and the client are of the standard `Message` json shape. If the client were to be developed further for real world usage this would need to change to allow more message types to be communicated between the server and the client.
+```json
+{
+  "uuid": "fe44f845-1cc9-4573-bf7f-e77e81c56694",
+  "createdAt": "2022-06-21T16:50:56.889605-05:00",
+  "content": "Hello World 2",
+  "sender":{
+    "uuid": "d19ead85-158b-4852-8c78-b9b6529b70a8",
+    "username": "sender"
+  },
+  "recipient":{
+    "uuid": "9939cdd4-be17-45a6-b3c9-d95aebe6fefb",
+    "username": "recipient"
+  }
+}
+```
