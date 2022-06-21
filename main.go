@@ -20,7 +20,7 @@ func main() {
 	httpMux.HandleFunc("/live", liveServer.ServeWebsocket)
 	httpMux.HandleFunc("/user/create", restAPI.CreateUser)
 	httpMux.HandleFunc("/message/send", restAPI.SendMessage)
-	//httpMux.HandleFunc("/message/search", restAPI.SearchMessages)
+	httpMux.HandleFunc("/message/search", restAPI.SearchMessages)
 
 	err = http.ListenAndServe(":8080", httpMux)
 	log.Fatalf("Error running HTTP server %s\n", err.Error())
