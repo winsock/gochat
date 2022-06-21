@@ -12,8 +12,8 @@ type WebAPI struct {
 }
 
 type Error struct {
-	message string
-	time    time.Time
+	Message string
+	Time    time.Time
 }
 
 func Create(db *database.Database) *WebAPI {
@@ -26,5 +26,5 @@ func (api *WebAPI) writeJsonResponse(w http.ResponseWriter, value interface{}, s
 }
 
 func (api *WebAPI) writeJsonError(w http.ResponseWriter, error string, statusCode int) error {
-	return api.writeJsonResponse(w, Error{message: error, time: time.Now()}, statusCode)
+	return api.writeJsonResponse(w, Error{Message: error, Time: time.Now()}, statusCode)
 }

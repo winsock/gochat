@@ -1,7 +1,7 @@
 package database
 
 func (db *Database) InsertUser(user User) (User, error) {
-	err := db.database.QueryRow("INSERT INTO users(username) VALUES (?) RETURNING uuid", user.Username).Scan(&user.UUID)
+	_, err := db.database.Exec("INSERT INTO users(uuid, username) VALUES (?, ?)", user.UUID, user.Username)
 	return user, err
 }
 
@@ -12,7 +12,7 @@ func (db *Database) FindUser(username string) (User, error) {
 }
 
 func (db *Database) InsertMessage(message Message) (Message, error) {
-	err := db.database.QueryRow("INSERT INTO messages(content, sender, recipient, created_at) VALUES (?, ?, ?, ?) RETURNING uuid",
-		message.Content, message.Sender.UUID, message.Recipient.UUID, message.CreatedAt).Scan(&message.UUID)
+	_, err := db.database.Exec("INSERT INTO messages(uuid, content, sender, recipient, created_at) VALUES (?, ?, ?, ?, ?)",
+		message.Content, message.Sender.UUID, message.Recipient.UUID, message.CreatedAt)
 	return message, err
 }
