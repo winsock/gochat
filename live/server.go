@@ -16,6 +16,14 @@ type Server struct {
 	clients     map[uuid.UUID]*Client
 }
 
+func Create(db *database.Database) *Server {
+	return &Server{
+		db:      db,
+		ctx:     context.Background(),
+		clients: make(map[uuid.UUID]*Client),
+	}
+}
+
 func (server *Server) ServeWebsocket(w http.ResponseWriter, r *http.Request) {
 	user, err := server.db.FindUser(r.FormValue("username"))
 	if err != nil {
