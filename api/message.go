@@ -74,9 +74,16 @@ func (api *WebAPI) SendMessage(w http.ResponseWriter, r *http.Request) {
 }
 
 func (api *WebAPI) SearchMessages(w http.ResponseWriter, r *http.Request) {
-	sender, _ := api.db.FindUser(r.FormValue("sender"))
-	recipient, _ := api.db.FindUser(r.FormValue("recipient"))
-
+	sender, err := api.db.FindUser(r.FormValue("sender"))
+	if len(r.FormValue("sender")) > 0 && err != nil {
+		_ = api.writeJsonError(w, "Unable to find sender with the provided username", http.StatusNotFound, err)
+		return
+	}
+	recipient, err := api.db.FindUser(r.FormValue("recipient"))
+	if len(r.FormValue("recipient")) > 0 && err != nil {
+		_ = api.writeJsonError(w, "Unable to find recipient with the provided username", http.StatusNotFound, err)
+		return
+	}
 	fromTime, err := api.parseTime(r.FormValue("from"), time.Now().AddDate(0, 0, -30))
 	if err != nil {
 		_ = api.writeJsonError(w, "Invalid from time provided, must be in the following format "+time.RFC3339Nano, http.StatusBadRequest, err)
