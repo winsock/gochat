@@ -3,4 +3,4 @@ This directory contains an example live chat client that communicates with the b
 
 ## Future Improvements
 - A strictly defined gRPC/JSON API allowing the same functionality as the RESTful interface
-- The ability to send messages directly
+- The ability to send messages directly, ran out of time to implement the sending on the client side
