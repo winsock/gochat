@@ -40,7 +40,7 @@ func TestDatabase_InsertMessage(t *testing.T) {
 	recipient := createTestUser(t, db, "test2")
 
 	newMessageUuid := uuid.New()
-	newMessageTime := time.Now()
+	newMessageTime := time.Now().In(time.UTC)
 	message, err := db.InsertMessage(Message{
 		UUID:      newMessageUuid,
 		CreatedAt: newMessageTime,
@@ -230,7 +230,7 @@ func createTestUser(t *testing.T, db *Database, username string) User {
 func createTestMessage(t *testing.T, db *Database, messageContents string, sender User, recipient User) Message {
 	message, err := db.InsertMessage(Message{
 		UUID:      uuid.New(),
-		CreatedAt: time.Now(),
+		CreatedAt: time.Now().In(time.UTC),
 		Content:   messageContents,
 		Sender:    sender,
 		Recipient: recipient,

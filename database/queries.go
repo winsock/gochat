@@ -61,6 +61,7 @@ func parseMessages(rows *sql.Rows) ([]Message, error) {
 			return messages, err
 		}
 		message.CreatedAt, err = time.Parse(time.RFC3339Nano, createdAtString)
+		message.CreatedAt = message.CreatedAt.In(time.UTC)
 		if err != nil {
 			return messages, err
 		}

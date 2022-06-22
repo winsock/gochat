@@ -29,7 +29,7 @@ func (api *WebAPI) SendMessage(w http.ResponseWriter, r *http.Request) {
 
 	newMessage, err := api.db.InsertMessage(database.Message{
 		UUID:      uuid.New(),
-		CreatedAt: time.Now(),
+		CreatedAt: time.Now().In(time.UTC),
 		Content:   message,
 		Sender:    *sender,
 		Recipient: *recipient,

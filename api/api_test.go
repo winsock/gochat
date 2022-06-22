@@ -208,7 +208,7 @@ func createTestUser(t *testing.T, api *WebAPI, username string) database.User {
 func createTestMessage(t *testing.T, api *WebAPI, messageContents string, sender database.User, recipient database.User) database.Message {
 	message, err := api.db.InsertMessage(database.Message{
 		UUID:      uuid.New(),
-		CreatedAt: time.Now(),
+		CreatedAt: time.Now().In(time.UTC),
 		Content:   messageContents,
 		Sender:    sender,
 		Recipient: recipient,
