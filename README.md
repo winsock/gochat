@@ -25,3 +25,12 @@ You will need to create a user via the API before the client will work
 ```shell
 go run ./demoLiveClient -username=<your username>
 ```
+
+## Testing
+Unit tests have been written for both the API and Database access. Unit tests are run automatically via GitHub Actions, but they can be run locally too if you have go installed.
+### Manually Run Unit Tests
+```shell
+go test -v ./...
+```
+### Manually Testing API
+If you want to test the API manually via curl or another method, [API.md](API.md) has the reference for all API calls.
