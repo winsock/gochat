@@ -4,3 +4,6 @@ This package implements the functionality needed to support realtime chat operat
 ## Known Limitations
 - Sending messages from the live client WIP
 - Restricted to a single connection per user. In the real world this would need to support multiple connections from the same user.
+
+## TODO
+- Unit testing

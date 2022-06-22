@@ -131,6 +131,7 @@ Returns a JSON object that contains the list of messages found(if any) and pagin
   - An invalid value passed in `offset`
   - An invalid value passed in `limit`
   - Missing `recipient`
+- 404 If the provided sender or recipient is not found
 - 500 If an error occurred while searching for the messages
 - 200 If the search was performed successfully
 #### Example curl
