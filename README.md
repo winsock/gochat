@@ -34,3 +34,9 @@ go test -v ./...
 ```
 ### Manually Testing API
 If you want to test the API manually via curl or another method, [API.md](API.md) has the reference for all API calls.
+#### Steps
+Generic steps, refer to [API.md](API.md) for example curl commands.
+- Create two users using `/user/create`
+- Start the demo live client for one or both of the users if wanting to test the realtime communications
+- Send a message `/message/send`
+- Search for the message with `/message/search`
