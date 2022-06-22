@@ -2,7 +2,7 @@
 By default, the server will bind on port 8080 on all interfaces. All RESTful API endpoints currently allow both GET or POST requests to allow easy use both via cURL or web browser. For GET the parameters should be passed as query parameters, and for POST as standard `application/x-www-form-urlencoded` data in the body.
 
 ## Time Format
-All timestamps returns are RFC3339 compliant and include nanoseconds
+All returned timestamps are RFC3339 compliant and include nanoseconds. For timestamps accepted by the APIs, they must be RFC3339 as well but the nanosecond precision is optional.
 
 ## Response Content Type
 All endpoints except for the `/live` endpoint return `application/json` 
